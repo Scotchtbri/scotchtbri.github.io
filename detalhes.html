@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detalhes do CBO</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f8f8f8;
+    }
+
+    h1 {
+      color: #023e8a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #023e8a;
+      color: white;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #0077b6;
+    }
+  </style>
+</head>
+<body>
+  <a class="back-link" href="index.html">← Voltar ao resumo</a>
+  <h1 id="titulo">Detalhes do CBO</h1>
+  <table id="tabelaDetalhes">
+    <thead>
+      <tr><th>Nome</th><th>CHS Total</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <footer style="margin-top:40px; padding:20px; text-align:center; font-size:14px; background:#e0e0e0; color:#333;">
+    <p>
+      <a href="index.html">Início</a> |
+      <a href="politica.html">Política de Privacidade</a>
+    </p>
+    <p>&copy; 2025 - Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const cboCode = urlParams.get("cbo");
+    const profissionais = JSON.parse(localStorage.getItem("listaCompleta")) || [];
+
+    const tabela = document.querySelector("#tabelaDetalhes tbody");
+    const titulo = document.getElementById("titulo");
+
+    const filtrados = profissionais
+      .filter(p => p.codigo === cboCode)
+      .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
+    if (filtrados.length > 0) {
+      titulo.textContent = `Detalhes do CBO ${cboCode} - ${filtrados[0].descricao}`;
+    } else {
+      titulo.textContent = `Nenhum profissional encontrado para o CBO ${cboCode}`;
+    }
+
+    filtrados.forEach(p => {
+      const row = `<tr><td>${p.nome}</td><td>${p.chs}</td></tr>`;
+      tabela.innerHTML += row;
+    });
+  </script>
+</body>
+</html>
