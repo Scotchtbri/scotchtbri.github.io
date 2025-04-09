@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <title>Resumo por CBO - Estabelecimento de Saúde</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7589400988920123"
+          crossorigin="anonymous"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -78,14 +83,6 @@
       background-color: #0096c7;
     }
 
-    #anuncioCima, #anuncioBaixo {
-      background: #fff;
-      padding: 20px;
-      margin: 20px 0;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
     #tableContainer {
       display: none;
     }
@@ -97,15 +94,16 @@
   <input type="file" id="fileInput" accept="application/pdf" />
   <button id="processarBtn">📄 Processar PDF</button>
 
-  <div id="anuncioCima">
-    <p>[ ESPAÇO PARA ANÚNCIO SUPERIOR ]</p>
+  <!-- Anúncio AdSense superior -->
+  <div style="margin: 20px 0; text-align:center;">
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-7589400988920123"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
-
   <div id="tableContainer"></div>
-
-  <div id="anuncioBaixo">
-    <p>[ ESPAÇO PARA ANÚNCIO INFERIOR ]</p>
-  </div>
 
   <button id="downloadBtn" style="display:none;">📥 Baixar CSV</button>
 
@@ -114,7 +112,7 @@
       <a href="index.html">Início</a> |
       <a href="politica.html">Política de Privacidade</a>
     </p>
-    <p>&copy; (TT).</p>
+    <p>&copy; 2025 - Todos os direitos reservados.</p>
   </footer>
 
   <script>
@@ -122,10 +120,8 @@
     const processarBtn = document.getElementById('processarBtn');
     const tableContainer = document.getElementById('tableContainer');
     const downloadBtn = document.getElementById('downloadBtn');
-    const anuncioCima = document.getElementById('anuncioCima');
     let fullText = '';
-    let csvData = "CBO,Cargo,Total_CHS,Contagem\n";
-
+    let csvData = "CBO,Cargo,Total_CHS,Contagem\\n";
     let fileArrayBuffer = null;
 
     fileInput.addEventListener('change', function () {
@@ -151,12 +147,11 @@
         const page = await pdf.getPage(pageNum);
         const content = await page.getTextContent();
         const strings = content.items.map(item => item.str);
-        fullText += strings.join(' ') + '\n';
+        fullText += strings.join(' ') + '\\n';
       }
 
       processText(fullText);
     });
-
     function processText(text) {
       const regex = /(\d{6}) - ([^-]+?)\s+SIM[\s\S]*?(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/g;
       const cboMap = {};
@@ -194,7 +189,7 @@
         <th>CBO</th><th>Descrição</th><th>CHS Total</th><th>Contagem</th>
         </tr></thead><tbody>`;
 
-      csvData = "CBO,Cargo,Total_CHS,Contagem\n";
+      csvData = "CBO,Cargo,Total_CHS,Contagem\\n";
 
       for (const data of sortedEntries) {
         html += `<tr>
@@ -203,7 +198,7 @@
           <td>${data.Total_CHS}</td>
           <td>${data.Contagem}</td>
         </tr>`;
-        csvData += `"${data.codigo}","${data.cargo}",${data.Total_CHS},${data.Contagem}\n`;
+        csvData += `"${data.codigo}","${data.cargo}",${data.Total_CHS},${data.Contagem}\\n`;
       }
 
       html += `</tbody></table>`;
@@ -229,5 +224,16 @@
       document.body.removeChild(link);
     });
   </script>
+
+  <!-- Anúncio AdSense final -->
+  <div style="margin: 20px 0; text-align:center;">
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-7589400988920123"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
 </body>
 </html>
